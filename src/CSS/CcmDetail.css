@@ -1,0 +1,44 @@
+.CcmDetail{
+  background-color: pink;
+  border-radius: 5%;
+  margin:2em;
+  padding:2em;
+  width:30rem;
+}
+.img{
+  width:22em;
+  height:20em;
+  border-radius: 5%;
+}
+.img:hover {
+ 
+  width: 35em;
+  height: 50em;
+  border-radius: 5%;
+}
+
+
+
+iframe{
+  border-radius: 5%;
+}
+
+@media only screen and (max-width:768px){
+  .CcmDetail{
+    margin:1em;
+    width:80vw;
+  }
+  .img{
+    width:17em;
+    height:10em;
+    border-radius: 5%;
+  }
+  iframe{
+    width:17em;
+    height:10em;
+    border-radius: 5%;
+
+  }
+}
+
+

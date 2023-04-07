@@ -1,0 +1,41 @@
+html{
+  background-color: #06546c;
+}
+.play{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 35rem;
+  margin-top: 2em;
+  background-color: #f1faee;
+  color: #06546c;
+  padding: 2em;
+  padding-bottom: 2em;
+  border-radius: 10%;
+  box-shadow: 10px 10px 10px #000;
+
+
+}
+.input-typing{
+  width:30rem;
+}
+
+#show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #06546c;
+  border-radius: 10%;
+  color: white;
+  width: 30rem;
+  height: 12rem;
+  padding:2rem;
+
+  border: 2px solid black;
+  margin: 1rem;
+}
+
+.Typing-title{
+  color:white;
+}
