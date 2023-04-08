@@ -5,17 +5,12 @@ const Typing = () => {
   const [msgs, setMsgs] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [score, setScore] = useState(0);
-  const [time, setTime] = useState(10);
- 
+  const [time, setTime] = useState(60);
+  const [start, setStart] = useState("START");
   const [isPlay, setIsPlay] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
   const [select, setSelect] = useState("");
   const [timeInterval, setTimeInterval] = useState(null);
-
-  const handleSelect = (e) => {
-    e.preventDefault();
-    setSelect(e.target.value);
-  };
 
   const getWords = async () => {
     let url = `https://yesu.io/bible?lang=kor&doc=${select}&start='1:10'&end=2:10`;
@@ -23,36 +18,49 @@ const Typing = () => {
     try {
       let res = await fetch(url);
       let data = await res.json();
-
-      setRandomArray(data);
-      randomArray.map((item) => {
-        if (item.message.length > 50) {
-          msgs.push(item.message);
+      setMsgs(data);
+      msgs.map((item) => {
+        let word = item.message;
+        if (word.length < 50) {
+          randomArray.push(item.message);
         }
+        return randomArray;
       });
-     
     } catch (e) {
       console.log(e);
     }
   };
-  console.log(msgs)
-  const startBtn = () => {
-    if (isPlay) {
-      return;
-    }
-    setIsPlay(true);
-    randomWord();
-    setTime(10);
-    setScore(0);
+  // console.log(randomArray)
+  // console.log(isPlay)
+  const randomWord = () => {
+    console.log(msgs);
+    const randomIdx = Math.floor(Math.random() * randomArray.length);
+    console.log(randomArray[randomIdx]);
+    setKeyword(randomArray[randomIdx]);
+    console.log(keyword, "keyword");
+    return keyword;
   };
 
-  const randomWord = () => {
-    if(isPlay){
-    const randomIdx = Math.floor(Math.random() * msgs.length);
-    console.log(msgs[randomIdx]);
-    setKeyword(msgs[randomIdx]);
-    console.log(keyword);
-  }
+  console.log(keyword);
+
+  const handleSelect = (e) => {
+    e.preventDefault();
+    setSelect(e.target.value);
+  };
+
+  const startBtn = async () => {
+    console.log("startBtn");
+    console.log(randomArray);
+    if (isPlay & keyword) {
+      return;
+    }
+    await getWords(select);
+
+    setIsPlay(true);
+    setTime(60);
+    setScore(0);
+    randomWord();
+    setStart("LOADING ...");
   };
 
   const matchWord = (e) => {
@@ -60,7 +68,7 @@ const Typing = () => {
       if (e.target.value === keyword) {
         setScore(score + 1);
         e.target.value = "";
-
+        console.log(e.target.value);
         randomWord();
       } else {
         return;
@@ -73,13 +81,13 @@ const Typing = () => {
       setTime(time - 1);
     } else {
       setIsPlay(false);
-      clearInterval(timeInterval);
+      setTimeInterval(clearInterval(timeInterval));
+      setStart("START");
     }
   };
   useEffect(() => {
     getWords();
-    
-  }, [select,msgs]);
+  }, [msgs, select]);
 
   useEffect(() => {
     if (isPlay) {
@@ -101,6 +109,7 @@ const Typing = () => {
       <form>
         <select name="bible" id="bible" onChange={handleSelect}>
           <label for="cars">Choose offline:</label>
+          <option>선택</option>
           <option value="mat">마태복음</option>
           <option value="mark">마가복음</option>
           <option value="luke">누가복음</option>
@@ -122,8 +131,13 @@ const Typing = () => {
           <option value="heb">히브리서</option>
         </select>
       </form>
-      <button onClick={startBtn}>START</button>
 
+      <button className="startBtn" onClick={startBtn}>
+        {start}
+      </button>
+      <h4 className={isPlay & !keyword ? "typing-h4" : "hide"}>
+        {!keyword ? "새로 고침 후 다른 책명을 선택해주세요!" : ""}
+      </h4>
       <div className="play">
         <div id="time">
           timer:<span id="timer">{time}</span>
