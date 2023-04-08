@@ -21,7 +21,7 @@ const [totalResult,setTotalResult]=useState(20);
 
 
   const getSource=async(keyword)=>{
-    const url=`http://localhost:3004/ccm?q=${keyword}`;
+    const url=`https://my-json-server.typicode.com/jenny4711/CN-react-my-web/ccm?q=${keyword}`;
     let res=await fetch(url)
 
     let data=await res.json()
@@ -39,7 +39,7 @@ const [totalResult,setTotalResult]=useState(20);
   }
 
   const getAll=async()=>{
-    const url1=`http://localhost:3004/ccm?_page=${currentPage}&_limit=${postsPerPage}`
+    const url1=`https://my-json-server.typicode.com/jenny4711/CN-react-my-web/ccm?_page=${currentPage}&_limit=${postsPerPage}`
     let res=await fetch(url1)
     let data=await res.json()
     setSource(data)
