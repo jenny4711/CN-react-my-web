@@ -51,7 +51,7 @@ const Typing = () => {
   const startBtn = async () => {
     console.log("startBtn");
     console.log(randomArray);
-    if (isPlay & keyword) {
+    if (isPlay & randomArray.length >0 ) {
       return;
     }
     await getWords(select);
