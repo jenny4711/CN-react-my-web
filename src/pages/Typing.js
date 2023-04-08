@@ -67,7 +67,7 @@ const Typing = () => {
     if (isPlay) {
       if (e.target.value === keyword) {
         setScore(score + 1);
-        e.target.value = "";
+        e.target.value = " ";
         console.log(e.target.value);
         randomWord();
       } else {
